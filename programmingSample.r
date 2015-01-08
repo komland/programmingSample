@@ -21,7 +21,7 @@ modelPerf <- function(object, ...){
 hypTest <- function(model){
   #calculate AICc of the 2 different models  
   #http://warnercnr.colostate.edu/~anderson/PDF_files/ttests.pdf
-  null.param <- length(model$coefficients) - 1; alt.param  <- null.param #need to double check numbers of params here
+  null.param <- 1; alt.param  <- 2 #need to double check numbers of params here, going off linear regression with a dummy var
   null  <- AIC(model, k = null.param) + (2*null.param*(null.param + 1))/(length(model$residuals)*null.param)
   alt   <- AIC(model, k = null.param) + (2*alt.param*(alt.param + 1))/(length(model$residuals)*alt.param)
   pData <- c(null,alt); dI <- pData - min(pData)
