@@ -21,9 +21,9 @@ modelPerf <- function(object, ...){
 hypTest <- function(model){
   #calculate AICc of the 2 different models  
   #http://warnercnr.colostate.edu/~anderson/PDF_files/ttests.pdf
-  null.param <- 1; alt.param  <- 2 #need to double check numbers of params here, going off linear regression with a dummy var
-  null  <- AIC(model, k = null.param) + (2*null.param*(null.param + 1))/(length(model$residuals)*null.param)
-  alt   <- AIC(model, k = null.param) + (2*alt.param*(alt.param + 1))/(length(model$residuals)*alt.param)
+  null.param <- 1; alt.param  <- 2 #linear regression with a dummy var, also length(fit.aov2$coefficients)
+  null  <- AIC(model) + (2*null.param*(null.param + 1))/(length(model$residuals)*null.param)
+  alt   <- AIC(model) + (2*alt.param*(alt.param + 1))/(length(model$residuals)*alt.param)
   pData <- c(null,alt); dI <- pData - min(pData)
   lhood <- sapply(dI, function(x)exp((-1/2)*x))
   prob  <- lhood/sum(lhood)
@@ -106,5 +106,4 @@ summary(fit.aov2)
 TukeyHSD(fit.aov2)
 hypTest(fit.aov2)
 ggplot(dat4, aes(treatment,y)) + geom_boxplot()
-
 
