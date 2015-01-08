@@ -1,5 +1,5 @@
 installChecker <- function(package){
-  #install required packages
+  # install required packages
   if(is.element(package,rownames(installed.packages())) == T){
     return(paste(package, "already installed"))
   }else {
@@ -19,8 +19,8 @@ modelPerf <- function(object, ...){
 }
 
 hypTest <- function(model){
-  #calculate AICc of the 2 different models  
-  #http://warnercnr.colostate.edu/~anderson/PDF_files/ttests.pdf
+  # calculate AICc of the 2 different models  
+  # http://warnercnr.colostate.edu/~anderson/PDF_files/ttests.pdf
   null.param <- 1; alt.param  <- 2 #linear regression with a dummy var, also length(fit.aov2$coefficients)
   null  <- AIC(model) + (2*null.param*(null.param + 1))/(length(model$residuals)*null.param)
   alt   <- AIC(model) + (2*alt.param*(alt.param + 1))/(length(model$residuals)*alt.param)
@@ -48,11 +48,11 @@ lapply(requiredpkgs, require, character.only=T)
 # exploratory analysis followed model selection 
 # descriptive model using anova
 
-#variance 
+# variance 
 tapply(dat4$y, dat4$treatment, var) #treatment
 tapply(dat4$y, dat4$plot, var) #plot
 
-#visualizations
+# visualizations
 ggplot(dat4, aes(y)) + geom_density()
 ggplot(dat4, aes(y)) + geom_density(aes(fill = treatment), alpha = .5)
 ggplot(dat4, aes(y)) + geom_density(aes(fill = plot), alpha = .5)
@@ -62,13 +62,12 @@ qqline(dat4$y[which(dat4$treatment == "control")])
 qqnorm(dat4$y[which(dat4$treatment == "fertilized")])
 qqline(dat4$y[which(dat4$treatment == "fertilized")])
 
-
 # things look normal enough for the small sample size
 # even with an outlier... sadly a fairly influential one, 
 
 dat4$y[which(dat4$y == max(dat4$y))]<-NA #remove outlier, still "balanced" but its a judgement call
 
-#more exploratory graphs for post outlier
+# more exploratory graphs for post outlier
 
 ggplot(dat4, aes(y)) + geom_density(aes(fill = treatment), alpha = .5)
 ggplot(dat4, aes(y)) + geom_density(aes(fill = plot), alpha = .5)
@@ -77,7 +76,7 @@ ggplot(dat4, aes(y)) + geom_density(aes(fill = plot), alpha = .5)
 
 # when analyzed by both factors things appear to be approx. normal, 
 # could use a more quantitative normality test... like anderson darling or ks test
-# anova robustness to viol of norm, small sample sizes, power issues
+# anova robustness to viol of norm, but small sample sizes/power issues could manifest
 # thats moot a posteriori 
 
 # model selection according to AIC/BIC
@@ -101,7 +100,7 @@ fit.aov4  <- aov(fit4)
 
 modelPerf(fit.aov1, fit.aov2, fit.aov3, fit.aov4)
 
-#take the best model and look at effect size/metric
+# take the best model and look at effect size/metric
 summary(fit.aov2)
 TukeyHSD(fit.aov2)
 hypTest(fit.aov2)
