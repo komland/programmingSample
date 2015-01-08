@@ -1,13 +1,13 @@
-installChecker <- function(package){
+installChecker <- function(package) {
   # install required packages
-  if(is.element(package,rownames(installed.packages())) == T){
+  if(is.element(package,rownames(installed.packages())) == T) {
     return(paste(package, "already installed"))
-  }else {
+  } else {
     install.packages(package) 
   }
 }
 
-modelPerf <- function(object, ...){
+modelPerf <- function(object, ...) {
   # displays diagnostics of models based on information theoretic approach
   # logic holds for w/e statistical comparison, actual calcs done by R fun'
   # should I include likelihood stuff/rel. prob?
@@ -18,7 +18,7 @@ modelPerf <- function(object, ...){
   results
 }
 
-hypTest <- function(model){
+hypTest <- function(model) {
   # calculate AICc of the 2 different models  
   # http://warnercnr.colostate.edu/~anderson/PDF_files/ttests.pdf
   null.param <- 1; alt.param  <- 2 #linear regression with a dummy var, also length(fit.aov2$coefficients)
@@ -73,16 +73,14 @@ ggplot(dat4, aes(y)) + geom_density(aes(fill = treatment), alpha = .5)
 ggplot(dat4, aes(y)) + geom_density(aes(fill = plot), alpha = .5)
 
 
-
 # when analyzed by both factors things appear to be approx. normal, 
 # could use a more quantitative normality test... like anderson darling or ks test
 # anova robustness to viol of norm, but small sample sizes/power issues could manifest
 # thats moot a posteriori 
 
 # model selection according to AIC/BIC
-# and likelihood/relative probability
 # some of these could be t-tests but they are similar results.. 
-# and preserves rigor of AIC/BIC
+# and same model ensures rigor of AIC/BIC - though it may not matter
 # testing all possible models because of possibility of interaction
 # confounding and etc. 
 
