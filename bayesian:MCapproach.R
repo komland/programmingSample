@@ -29,12 +29,11 @@ lapply(requiredpkgs, require, character.only=T)
 #control 
 
 #priors
-# i made these up, obviously very sensitive to this
-# redo with improper priors
+#non informative
 
-mean0 <- 9.8
+mean0 <- 0
 k0    <- 1
-s20   <- .2
+s20   <- 0
 nu0   <- 1
 
 #data
@@ -68,12 +67,11 @@ params.c <- res[which(res[,3] == max(res[,3])), c(1:2)]
 #fertilized
 
 #priors
-# i made these up, obviously very sensitive to this
-#redo with improper priors
+#non informative priors
 
-mean0 <- 10.5
+mean0 <- 0
 k0    <- 1
-s20   <- .3
+s20   <- 0
 nu0   <- 1
 
 
@@ -102,9 +100,8 @@ params.f <- res[which(res[,3] == max(res[,3])), c(1:2)]
 
 
 #contour comparisons of joint posterior distributions
-contour(est.c$x1, est.c$x2, est.c$fhat, ylim = c(range(9.5,11)), 
-        xlim = c(range(0,.6)), col = 2)
-contour(est.f$x1, est.f$x2, est.f$fhat, add = T)
+contour(est.c$x1, est.c$x2, est.c$fhat)
+contour(est.f$x1, est.f$x2, est.f$fhat, add = T, col = 2)
 
 
 #compare the results from this to the results from a frequentist t-test/anova analysis
